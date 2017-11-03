@@ -30,7 +30,7 @@ class Flickr{
             let body = JSON(object)
             for(_, photos): (String, JSON) in body["photos"]["photo"]{
                 // Add each data to Photo array
-                Flickr.photos.append(Photo(title: photos["title"].stringValue, imageByUrl: photos["url_s"].stringValue, takenDate: photos["date_taken"].stringValue, latitude: photos["latitude"].stringValue, longitude: photos["longitude"].stringValue))
+                Flickr.photos.append(Photo(title: photos["title"].stringValue, imageByUrl: photos["url_s"].stringValue, takenDate: photos["date_taken"].stringValue, latitude: photos["latitude"].doubleValue, longitude: photos["longitude"].doubleValue))
                 
             }
             print(Flickr.photos)

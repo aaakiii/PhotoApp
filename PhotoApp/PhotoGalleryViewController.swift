@@ -5,7 +5,8 @@ import SwiftyJSON
 class PhotoGalleryViewController: UIViewController,
 UICollectionViewDataSource, UICollectionViewDelegate {
     
-
+    @IBOutlet var searchBar: UISearchBar!
+    
     @IBOutlet var collectionView: UICollectionView!
     
     var photos = [Photo]()
@@ -15,8 +16,8 @@ UICollectionViewDataSource, UICollectionViewDelegate {
         super.viewDidLoad()
         collectionView.delegate = self
         collectionView.dataSource = self
-        let nib = UINib(nibName:"PhotoCollectionViewCell", bundle:nil)
-        collectionView.register(nib, forCellWithReuseIdentifier:"Cell")
+//        let nib = UINib(nibName:"PhotoCollectionViewCell", bundle:nil)
+//        collectionView.register(nib, forCellWithReuseIdentifier:"Cell")
         getImages()
         
     }
@@ -29,16 +30,31 @@ UICollectionViewDataSource, UICollectionViewDelegate {
         photoCell.setImage(photo:photos[indexPath.row])
         return photoCell
     }
-    
-    
-    // When cell is selected
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionVIew(_ collectionView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // Search and set recipeData from [indexPath.row]
         selectedPhoto = Photo(title: photos[indexPath.row].title, imageByUrl:
             photos[indexPath.row].imageByUrl, takenDate: photos[indexPath.row].takenDate, latitude: photos[indexPath.row].latitude, longitude: photos[indexPath.row].longitude)
-        //
-        
         selectedPhoto = photos[indexPath.row]
+        if selectedPhoto != nil {
+            // Go to detail view and pass recipe data
+            let storyboard: UIStoryboard = self.storyboard!
+            let nextView = storyboard.instantiateViewController(withIdentifier: "Map") as! MapViewController
+            nextView.selectedPhoto = selectedPhoto
+            self.navigationController?.pushViewController(nextView, animated: true)
+            
+        }
     }
+    
+    
+    
+//    // When cell is selected
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        selectedPhoto = Photo(title: photos[indexPath.row].title, imageByUrl:
+//            photos[indexPath.row].imageByUrl, takenDate: photos[indexPath.row].takenDate, latitude: photos[indexPath.row].latitude, longitude: photos[indexPath.row].longitude)
+//
+//        
+//        selectedPhoto = photos[indexPath.row]
+//    }
     
     
     func getImages(){
