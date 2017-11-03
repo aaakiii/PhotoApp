@@ -3,7 +3,8 @@ import Alamofire
 import SwiftyJSON
 
 class PhotoGalleryViewController: UIViewController,
-UICollectionViewDataSource, UICollectionViewDelegate, UISearchBarDelegate {
+UICollectionViewDataSource, UICollectionViewDelegate, UISearchResultsUpdating {
+    
     
     var searchController = UISearchController(searchResultsController: nil)
     
@@ -18,22 +19,32 @@ UICollectionViewDataSource, UICollectionViewDelegate, UISearchBarDelegate {
         super.viewDidLoad()
         collectionView.delegate = self
         collectionView.dataSource = self
-        searchBar.delegate = self
-//        searchController.searchResultsUpdater = self
-//        searchController.dimsBackgroundDuringPresentation = false
-//        searchController.searchBar.sizeToFit()
+        searchController.searchResultsUpdater = self
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.searchBar.sizeToFit()
         searchBar.enablesReturnKeyAutomatically = false
-        
+        searchResult = photos
         getImages(tag: searchBar.text!)
         
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photos.count
+        if(searchController.searchBar.text != ""){
+            return searchResult.count
+        } else{
+            return photos.count
+        }
+   
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let photoCell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! PhotoCollectionViewCell
-        photoCell.setImage(photo:photos[indexPath.row])
+        
+        if ( searchController.searchBar.text != ""){
+            //セルに値を表示
+            photoCell.setImage(photo:searchResult[indexPath.row])
+        } else{
+            photoCell.setImage(photo:photos[indexPath.row])
+        }
         return photoCell
     }
     
@@ -50,23 +61,25 @@ UICollectionViewDataSource, UICollectionViewDelegate, UISearchBarDelegate {
             preconditionFailure("Unexpected segue identifier.")
         }
     }
+
     
-//    func updateSearchResults(for searchController: UISearchController) {
-//        //検索文字列を含むデータを検索結果配列に格納する。
-//        getImages(tag: searchBar.text!)
-//
-//        //テーブルビューを再読み込みする。
-//        collectionView.reloadData()
-//    }
-//
+    func updateSearchResults(for searchController: UISearchController) {
+        //検索文字列を含むデータを検索結果配列に格納する。
+        getImages(tag: searchBar.text!)
 
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        print(searchText)
-        getImages(tag: searchText)
-
+        //テーブルビューを再読み込みする。
+        collectionView.reloadData()
     }
 
 
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        self.searchBar.endEditing(true)
+        if(!(searchBar.text?.isEmpty)!){
+            //reload your data source if necessary
+            self.collectionView?.reloadData()
+        }
+        getImages(tag: searchBar.text!)
+    }
     
     
     func getImages(tag: String){

@@ -5,10 +5,9 @@ class PhotoCollectionViewCell: UICollectionViewCell {
 
     var photo: Photo?
     
-   
+    @IBOutlet var photoTitle: UILabel!
     @IBOutlet var imageView: UIImageView!
-//    @IBOutlet var photoTitle: UILabel!
-//    @IBOutlet var imageView: UIImageView!
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -24,7 +23,7 @@ class PhotoCollectionViewCell: UICollectionViewCell {
         let data = try? Data(contentsOf: url!)
         imageView.image = UIImage(data: data!)
         imageView.sizeToFit()
-//        photoTitle.text = photo.title
+        photoTitle.text = photo.title
         
     }
     
