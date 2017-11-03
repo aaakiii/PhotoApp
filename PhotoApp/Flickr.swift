@@ -7,18 +7,18 @@ class Flickr{
     
     
     static var photos = [Photo]()
+
     
-    static func getImage(completion: @escaping(_ photos: [Photo]) -> Void){
+    static func getImage(tag: String, completion: @escaping(_ photos: [Photo]) -> Void){
         
         let baseUrl = "https://api.flickr.com/services/rest/"
         let apiKey = "effab55429eaf872edf9f365ca237918"
         let serchMethod = "flickr.photos.search"
         let formatType = "json"
-        let jsonCallback = 1
-        let privercyFilter = 1
+        let jsonCallback = "1"
+        let privercyFilter = "1"
         let hasGeo = "1"
         let extras = "url_s,date_taken"
-        let tag = ""
         let query = ["method": serchMethod, "api_key": apiKey, "tags":tag, "privacy_filter":privercyFilter, "format":formatType, "nojsoncallback": jsonCallback, "has_geo": hasGeo, "extras":extras] as [String : Any]
         
         
@@ -33,7 +33,6 @@ class Flickr{
                 Flickr.photos.append(Photo(title: photos["title"].stringValue, imageByUrl: photos["url_s"].stringValue, takenDate: photos["date_taken"].stringValue, latitude: photos["latitude"].doubleValue, longitude: photos["longitude"].doubleValue))
                 
             }
-            print(Flickr.photos)
             completion(Flickr.photos)
         }
     }

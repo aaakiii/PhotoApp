@@ -3,24 +3,28 @@ import Alamofire
 import SwiftyJSON
 
 class PhotoGalleryViewController: UIViewController,
-UICollectionViewDataSource, UICollectionViewDelegate {
+UICollectionViewDataSource, UICollectionViewDelegate, UISearchBarDelegate {
+    
+    var searchController = UISearchController(searchResultsController: nil)
     
     @IBOutlet var searchBar: UISearchBar!
-    
     @IBOutlet var collectionView: UICollectionView!
     
     var photos = [Photo]()
     var selectedPhoto: Photo?
+    var searchResult = [Photo]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.delegate = self
         collectionView.dataSource = self
-        searchBar.text = ""
-//        searchBar.delegate = self
-//        searchBar.enablesReturnKeyAutomatically = false
-
-        getImages()
+        searchBar.delegate = self
+//        searchController.searchResultsUpdater = self
+//        searchController.dimsBackgroundDuringPresentation = false
+//        searchController.searchBar.sizeToFit()
+        searchBar.enablesReturnKeyAutomatically = false
+        
+        getImages(tag: searchBar.text!)
         
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -32,8 +36,8 @@ UICollectionViewDataSource, UICollectionViewDelegate {
         photoCell.setImage(photo:photos[indexPath.row])
         return photoCell
     }
-    // when image is selected
     
+    // when image is selected
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier {
         case "Map"?:
@@ -46,20 +50,27 @@ UICollectionViewDataSource, UICollectionViewDelegate {
             preconditionFailure("Unexpected segue identifier.")
         }
     }
-
+    
+//    func updateSearchResults(for searchController: UISearchController) {
+//        //検索文字列を含むデータを検索結果配列に格納する。
+//        getImages(tag: searchBar.text!)
 //
-//    func searchBarButtonClicked(_ seachBar: UISearchBar) {
-//        searchBar.endEditing(true)
-//        if()
-//        searchBar.resignFirstResponder()
-//
+//        //テーブルビューを再読み込みする。
+//        collectionView.reloadData()
 //    }
 //
 
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        print(searchText)
+        getImages(tag: searchText)
+
+    }
+
+
     
     
-    func getImages(){
-        Flickr.getImage{ (photos) in
+    func getImages(tag: String){
+        Flickr.getImage(tag: searchBar.text!){ (photos) in
             var imageData = [Photo]()
             imageData = Flickr.photos
             self.photos = imageData
