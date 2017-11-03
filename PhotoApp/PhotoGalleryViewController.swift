@@ -25,7 +25,7 @@ UICollectionViewDataSource, UICollectionViewDelegate, UISearchResultsUpdating {
         searchBar.enablesReturnKeyAutomatically = false
         searchResult = photos
         getImages(tag: searchBar.text!)
-        
+    
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if(searchController.searchBar.text != ""){
@@ -38,9 +38,7 @@ UICollectionViewDataSource, UICollectionViewDelegate, UISearchResultsUpdating {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let photoCell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! PhotoCollectionViewCell
-        
         if ( searchController.searchBar.text != ""){
-            //セルに値を表示
             photoCell.setImage(photo:searchResult[indexPath.row])
         } else{
             photoCell.setImage(photo:photos[indexPath.row])
@@ -62,9 +60,13 @@ UICollectionViewDataSource, UICollectionViewDelegate, UISearchResultsUpdating {
         }
     }
 
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        self.searchBar.showsCancelButton = true
+    }
     
     func updateSearchResults(for searchController: UISearchController) {
         //検索文字列を含むデータを検索結果配列に格納する。
+        print(searchBar.text!)
         getImages(tag: searchBar.text!)
 
         //テーブルビューを再読み込みする。
@@ -72,15 +74,17 @@ UICollectionViewDataSource, UICollectionViewDelegate, UISearchResultsUpdating {
     }
 
 
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        self.searchBar.endEditing(true)
-        if(!(searchBar.text?.isEmpty)!){
-            //reload your data source if necessary
-            self.collectionView?.reloadData()
-        }
-        getImages(tag: searchBar.text!)
-    }
-    
+//    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+//        self.searchBar.endEditing(true)
+//        print(searchBar.text!)
+//        if(!(searchBar.text?.isEmpty)!){
+//            //reload your data source if necessary
+//            self.collectionView?.reloadData()
+//        }
+//
+//        getImages(tag: searchBar.text!)
+//    }
+//
     
     func getImages(tag: String){
         Flickr.getImage(tag: searchBar.text!){ (photos) in
@@ -91,6 +95,9 @@ UICollectionViewDataSource, UICollectionViewDelegate, UISearchResultsUpdating {
         }
         
     }
+    
+    
+    
     
     
 }

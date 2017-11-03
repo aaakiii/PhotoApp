@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		615B6F1B1FAC5693006EAB31 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615B6F191FAC5693006EAB31 /* PhotoCollectionViewCell.swift */; };
-		615B6F1C1FAC5693006EAB31 /* PhotoCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 615B6F1A1FAC5693006EAB31 /* PhotoCollectionViewCell.xib */; };
 		615B6F211FAC5C8A006EAB31 /* PhotoGalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615B6F201FAC5C8A006EAB31 /* PhotoGalleryViewController.swift */; };
 		615B6F231FAC62FC006EAB31 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615B6F221FAC62FC006EAB31 /* MapViewController.swift */; };
 		61BEB7101FAC3F07009662FB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BEB70F1FAC3F07009662FB /* AppDelegate.swift */; };
@@ -25,7 +24,6 @@
 
 /* Begin PBXFileReference section */
 		615B6F191FAC5693006EAB31 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
-		615B6F1A1FAC5693006EAB31 /* PhotoCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PhotoCollectionViewCell.xib; sourceTree = "<group>"; };
 		615B6F201FAC5C8A006EAB31 /* PhotoGalleryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoGalleryViewController.swift; sourceTree = "<group>"; };
 		615B6F221FAC62FC006EAB31 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		61BEB70C1FAC3F07009662FB /* PhotoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -85,7 +83,6 @@
 				61BEB7281FAC4126009662FB /* Photo.swift */,
 				61BEB72E1FAC451C009662FB /* Flickr.swift */,
 				615B6F191FAC5693006EAB31 /* PhotoCollectionViewCell.swift */,
-				615B6F1A1FAC5693006EAB31 /* PhotoCollectionViewCell.xib */,
 				615B6F201FAC5C8A006EAB31 /* PhotoGalleryViewController.swift */,
 				615B6F221FAC62FC006EAB31 /* MapViewController.swift */,
 			);
@@ -163,7 +160,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				61BEB71A1FAC3F07009662FB /* LaunchScreen.storyboard in Resources */,
-				615B6F1C1FAC5693006EAB31 /* PhotoCollectionViewCell.xib in Resources */,
 				61BEB7171FAC3F07009662FB /* Assets.xcassets in Resources */,
 				61BEB7151FAC3F07009662FB /* Main.storyboard in Resources */,
 			);
